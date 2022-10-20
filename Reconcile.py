@@ -31,23 +31,21 @@ def process(gzfile):
             for line in f:
                 if isinstance(line, (bytes, bytearray)):
                     line = line.decode("utf-8")
-                line.split()
-                for ob in line.split("object"):
-                    ob_name = ob[1].split()[0]
-                    if (df.isin([ob_name]).any().any()):
-                        if "raised" in ob[1]: 
-                            df.loc[df['Object'] == ob_name, 'Raised'] = df.loc[df.Object==ob_name, 'Raised'].values[0] +1
-                        if "dropped" in ob[1]: 
-                            df.loc[df['Object'] == ob_name, 'Dropped'] = df.loc[df.Object==ob_name, 'Dropped'].values[0] +1 
-                    else:
-                        raised = 0
-                        dropped = 0
-                        if "raised" in ob[1]:
-                            raised = 1
-                        if "dropped" in ob[1]:
-                            dropped = 1
-                        df = df.append({'Object' : ob_name, 'Raised' : raised, 'Dropped': dropped},
-                            ignore_index = True)
+                ob =  line.split("object")
+                ob_name = ob[1].split()[0]
+                if (df.isin([ob_name]).any().any()):
+                    if "raised" in ob[1]: 
+                        df.loc[df['Object'] == ob_name, 'Raised'] = df.loc[df.Object==ob_name, 'Raised'].values[0] +1
+                    if "dropped" in ob[1]: 
+                        df.loc[df['Object'] == ob_name, 'Dropped'] = df.loc[df.Object==ob_name, 'Dropped'].values[0] +1 
+                else:
+                    raised = 0
+                    dropped = 0
+                    if "raised" in ob[1]:
+                        raised = 1
+                    if "dropped" in ob[1]:
+                        dropped = 1
+                    df = df.append({'Object' : ob_name, 'Raised' : raised, 'Dropped': dropped},ignore_index = True)
             df['Difference'] = df.apply(lambda x: "YES" if x['Raised'] == x['Dropped']  else "NO", axis=1)
             df.index = np.arange(1, len(df) + 1)
             df.to_excel("Reconcile.xls")
