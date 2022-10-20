@@ -32,7 +32,8 @@ def process(gzfile):
                 if isinstance(line, (bytes, bytearray)):
                     line = line.decode("utf-8")
                 ob =  line.split("object")
-                pprint(ob)
+                if (len(ob) <= 1):
+                    continue
                 ob_name = ob[1].split()[0]
                 if (df.isin([ob_name]).any().any()):
                     if "raised" in ob[1]: 
