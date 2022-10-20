@@ -1,0 +1,6 @@
+VM_INFO @ 0ns: run [OBJTN_TRC] Object uvm_top added 1 objection(s) to its total (raised from source object uvm_test_top): count=0  total=1
+UVM_INFO @ 0ns: run [OBJTN_TRC] Object uvm_test_top.cpu_top_env.amba_system_env.chi_system[0].rn[0].rn_xact_seqr added 1 objection(s) to its total (raised from source object ): count=0  total=1
+UVM_INFO @ 0ns: run [OBJTN_TRC] Object uvm_test_top.cpu_top_env.amba_system_env.chi_system[0].rn[0] added 1 objection(s) to its total (raised from source object ): count=0  total=1
+UVM_INFO @ 0ns: run [OBJTN_TRC] Object uvm_test_top.cpu_top_env.amba_system_env.chi_system[0] added 1 objection(s) to its total (raised from source object ): count=0  total=1
+UVM_INFO @ 0ns: run [OBJTN_TRC] Object uvm_test_top.cpu_top_env.amba_system_env.chi_system[0].rn[0].rn_xact_seqr subtracted 1 objection(s) from its total (dropped from source object ): count=0  total=0
+UVM_INFO @ 0ns: run [OBJTN_TRC] Object uvm_test_top.cpu_top_env.amba_system_env.chi_system[0].rn[1].rn_xact_seqr subtracted 1 objection(s) from its total (dropped from source object ): count=0  total=0
