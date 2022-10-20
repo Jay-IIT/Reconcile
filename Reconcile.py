@@ -46,9 +46,10 @@ def process(gzfile):
                     if "dropped" in ob[1]:
                         dropped = 1
                     df = df.append({'Object' : ob_name, 'Raised' : raised, 'Dropped': dropped},ignore_index = True)
-            df['Difference'] = df.apply(lambda x: "YES" if x['Raised'] == x['Dropped']  else "NO", axis=1)
-            df.index = np.arange(1, len(df) + 1)
-            df.to_excel("Reconcile.xls")
+        df['Difference'] = df.apply(lambda x: "YES" if x['Raised'] == x['Dropped']  else "NO", axis=1)
+        df.index = np.arange(1, len(df) + 1)
+        df.to_excel("Reconcile.xls")
+        pprint("Successfully Processed ✌️")
     except Exception as e:
         pprint(f"Excetion 😭 {e}")
                           
@@ -59,4 +60,5 @@ if __name__ == "__main__":
    pprint("##################################")
    args = getargs()
    pprint(f"➡️ FILE TO BE PARSED  :{args.gzfile} \n")
+   process(args.gzfile)
    sys.exit()
