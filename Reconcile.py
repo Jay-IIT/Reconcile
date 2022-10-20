@@ -51,7 +51,7 @@ def process(gzfile):
         df.to_excel("Reconcile.xls")
         pprint("Successfully Processed ✌️")
     except Exception as e:
-        pprint(f"Excetion 😭 {e}")
+        pprint(f"Exception 😭 {e}")
                           
 if __name__ == "__main__":
    os.system('clear')
