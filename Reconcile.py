@@ -31,8 +31,11 @@ def process(gzfile):
             for line in f:
                 if isinstance(line, (bytes, bytearray)):
                     line = line.decode("utf-8")
-                ob =  line.split("object")
-                if (len(ob) <= 1):
+                if ("object" in line and ("raised from source" in line or "dropped from source" in line)):
+                    ob =  line.split("object")
+                    if (len(ob) <= 1):
+                        continue
+                else:
                     continue
                 ob_name = ob[1].split()[0]
                 if (df.isin([ob_name]).any().any()):
