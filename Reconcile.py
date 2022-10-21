@@ -26,23 +26,24 @@ def pprint(text):
 
 def process(gzfile):
     try:
-        df = pd.DataFrame(columns = ['Object','Raised', 'Dropped'])
+        df = pd.DataFrame(columns = ['Object','Added', 'Subtracted'])
         with gzip.open( gzfile, 'rb') as f:
             for line in f:
                 if isinstance(line, (bytes, bytearray)):
                     line = line.decode("utf-8")
-                if ("Object" in line and ("raised from source" in line or "dropped from source" in line)):
+                if ("OBJTN_TRC" in line):
                     ob =  line.split("Object")
                     if (len(ob) <= 1):
                         continue
                 else:
                     continue
                 ob_name = ob[1].split()[0]
+                ob_name = ob_name.split(".",1)[1]
                 if (df.isin([ob_name]).any().any()):
                     if "raised from source" in ob[1]: 
-                        df.loc[df['Object'] == ob_name, 'Raised'] = df.loc[df.Object==ob_name, 'Raised'].values[0] +1
+                        df.loc[df['Object'] == ob_name, 'Added'] = df.loc[df.Object==ob_name, 'Added'].values[0] +1
                     if "dropped" in ob[1]: 
-                        df.loc[df['Object'] == ob_name, 'Dropped'] = df.loc[df.Object==ob_name, 'Dropped'].values[0] +1 
+                        df.loc[df['Object'] == ob_name, 'Subtracted'] = df.loc[df.Object==ob_name, 'Subtracted'].values[0] +1 
                 else:
                     raised = 0
                     dropped = 0
@@ -50,8 +51,8 @@ def process(gzfile):
                         raised = 1
                     if "dropped" in ob[1]:
                         dropped = 1
-                    df = df.append({'Object' : ob_name, 'Raised' : raised, 'Dropped': dropped},ignore_index = True)
-        df['Difference'] = df.apply(lambda x: "NO" if x['Raised'] == x['Dropped']  else "YES", axis=1)
+                    df = df.append({'Object' : ob_name, 'Added' : raised, 'Subtracted': dropped},ignore_index = True)
+        df['Difference'] = df.apply(lambda x: "NO" if x['Raised'] == x['Subtracted']  else "YES", axis=1)
         df.index = np.arange(1, len(df) + 1)
         df.to_excel("Reconcile.xls")
         pprint("Successfully Processed ✌️")
