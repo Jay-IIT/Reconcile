@@ -26,7 +26,7 @@ def pprint(text):
 
 def process(gzfile):
     try:
-        df = pd.DataFrame(columns = ['Object','Added', 'Subtracted'])
+        df = pd.DataFrame(columns = ['Object','Added', 'Subtracted','Difference'])
         with gzip.open( gzfile, 'rb') as f:
             for line in f:
                 if isinstance(line, (bytes, bytearray)):
