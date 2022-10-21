@@ -7,7 +7,7 @@ from os.path import isfile, join
 import pandas as pd
 import numpy as np
 import gzip
-
+import traceback
  
 
 def getargs():
@@ -31,7 +31,7 @@ def process(gzfile):
             for line in f:
                 if isinstance(line, (bytes, bytearray)):
                     line = line.decode("utf-8")
-                if ("OBJTN_TRC" in line and "Object" in line):
+                if (("OBJTN_TRC" in line) and ("Object" in line)):
                     ob =  line.split("Object")
                     if (len(ob) <= 1):
                         continue
@@ -58,6 +58,7 @@ def process(gzfile):
         pprint("Successfully Processed ✌️")
     except Exception as e:
         pprint(f"Exception 😭 {e}")
+        traceback.print_exc()
                           
 if __name__ == "__main__":
    os.system('clear')
