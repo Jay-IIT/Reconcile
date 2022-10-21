@@ -40,19 +40,19 @@ def process(gzfile):
                 ob_name = ob[1].split()[0]
                 ob_name = ob_name.split(".",1)[1]
                 if (df.isin([ob_name]).any().any()):
-                    if "raised from source" in ob[1]: 
+                    if "added" in ob[1]: 
                         df.loc[df['Object'] == ob_name, 'Added'] = df.loc[df.Object==ob_name, 'Added'].values[0] +1
-                    if "dropped" in ob[1]: 
+                    if "subtracted" in ob[1]: 
                         df.loc[df['Object'] == ob_name, 'Subtracted'] = df.loc[df.Object==ob_name, 'Subtracted'].values[0] +1 
                 else:
-                    raised = 0
-                    dropped = 0
-                    if "raised" in ob[1]:
-                        raised = 1
-                    if "dropped" in ob[1]:
-                        dropped = 1
-                    df = df.append({'Object' : ob_name, 'Added' : raised, 'Subtracted': dropped},ignore_index = True)
-        df['Difference'] = df.apply(lambda x: "NO" if x['Raised'] == x['Subtracted']  else "YES", axis=1)
+                    added = 0
+                    subtracted = 0
+                    if "added" in ob[1]:
+                        added = 1
+                    if "subtracted" in ob[1]:
+                        subtracted = 1
+                    df = df.append({'Object' : ob_name, 'Added' : added, 'Subtracted': subtracted},ignore_index = True)
+        df['Difference'] = df.apply(lambda x: "NO" if x['Added'] == x['Subtracted']  else "YES", axis=1)
         df.index = np.arange(1, len(df) + 1)
         df.to_excel("Reconcile.xls")
         pprint("Successfully Processed ✌️")
